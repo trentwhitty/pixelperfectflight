@@ -1,0 +1,17 @@
+# Only publish what the live page uses
+/*
+!/index.html
+!/CNAME
+!/.nojekyll
+!/.gitignore
+!/media/
+/media/*
+!/media/flight/
+!/media/partners/
+!/media/promo-720.mp4
+!/media/promo-poster.jpg
+!/media/logo-alpha.png
+!/media/logo-src.png
+!/media/nav-logo.png
+!/media/portrait.webp
+!/media/press.webp

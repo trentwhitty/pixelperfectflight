@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel Perfect Flight — Cinematic Video, Drone & Marketing</title>
+<meta name="description" content="Cinematic video, FAA Part 107 drone aerials, photography, AI video, social ads and web design for Southwest Florida and Miami businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#02040a;--ink:#f3f6ff;--muted:#a9b8d6;--dim:#5a6c90;--blue:#2f7bff;--cyan:#46d3ff;--glow:rgba(70,160,255,.55);--glass:rgba(6,12,28,.5);--line:rgba(140,190,255,.22);--disp:Anton,Impact,"Arial Narrow",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.mono{font-family:"JetBrains Mono",monospace;letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:var(--cyan)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;font-weight:600;font-size:14px;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,background .25s;cursor:pointer;border:0;font-family:inherit}
+.btn-primary{background:linear-gradient(135deg,#3b8bff,#1a4fd6);color:#fff;box-shadow:0 0 0 1px rgba(140,190,255,.35) inset,0 10px 40px -10px var(--glow)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.25) inset;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:20;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+nav.solid{background:rgba(2,6,16,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:none;padding:0 32px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--disp);font-weight:800;letter-spacing:.02em;font-size:16px}
+.brand img{height:38px;width:auto;border-radius:6px}
+.links{display:flex;gap:30px;font-size:14px;color:rgba(255,255,255,.75)}
+.links a:hover{color:#fff}
+
+/* FLIGHT */
+#flight{position:relative;height:1100vh}
+#stage{position:sticky;top:0;height:100vh;width:100%;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;background:#0b0b10}
+.letter{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(2,4,10,.55),transparent 22%,transparent 70%,rgba(2,4,10,.6)),radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.45) 100%)}
+.grain{position:absolute;inset:-50%;pointer-events:none;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-4%)}60%{transform:translate(-4%,-1%)}80%{transform:translate(3%,3%)}}
+
+/* chapters */
+.ch{position:absolute;opacity:0;transform:translateY(30px);will-change:opacity,transform;pointer-events:none}
+.ch.on{pointer-events:auto}
+.ch h2{font-family:var(--disp);font-weight:800;font-size:clamp(36px,5.6vw,84px);line-height:.95;letter-spacing:-.03em;text-shadow:0 6px 40px rgba(0,0,0,.45)}
+.ch h2 em{font-style:normal;background:linear-gradient(100deg,#9fd6ff,#2f7bff 55%,#9fe6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ch p{color:rgba(240,246,255,.9);max-width:460px;margin-top:16px;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+.left{left:clamp(20px,5vw,80px);top:50%;margin-top:-140px;max-width:640px}
+.right{right:clamp(20px,5vw,80px);top:50%;margin-top:-150px;max-width:460px}
+.bottom{left:50%;bottom:7vh;transform:translate(-50%,30px);text-align:center}
+.card{padding:28px 28px 26px;border-radius:22px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);box-shadow:0 30px 80px -30px rgba(0,0,0,.6)}
+.card h3{font-family:var(--disp);font-size:26px;line-height:1.12;margin:14px 0 10px}
+.card p{margin-top:0;color:var(--muted);font-size:15px;text-shadow:none}
+.stats{display:grid;grid-template-columns:repeat(4,auto);gap:0;border-radius:22px;overflow:hidden}
+.stat{padding:22px 26px;border-right:1px solid var(--line)}.stat:last-child{border-right:0}
+.stat b{display:block;font-family:var(--disp);font-size:clamp(26px,3vw,40px);line-height:1;margin-bottom:8px}
+.stat b i{font-style:normal;color:var(--cyan)}
+.stat small{color:var(--muted);font-size:12.5px;display:block;max-width:150px;line-height:1.4}
+.hint{display:flex;flex-direction:column;align-items:center;gap:10px}
+.mouse{width:24px;height:38px;border-radius:14px;border:1.5px solid rgba(255,255,255,.7);position:relative}
+.mouse::after{content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:#fff;animation:wheel 1.8s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes wheel{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+.progress{position:absolute;right:22px;top:50%;transform:translateY(-50%);width:2px;height:180px;background:rgba(255,255,255,.18);border-radius:2px;overflow:hidden}
+.progress i{position:absolute;left:0;top:0;width:100%;background:linear-gradient(var(--cyan),var(--blue));height:0}
+
+/* loader */
+#loader{position:fixed;inset:0;z-index:50;background:#02040a;display:grid;place-items:center;transition:opacity .8s,visibility .8s}
+#loader.done{opacity:0;visibility:hidden}
+#loader .box{display:grid;justify-items:center;gap:18px}
+#loader img{width:220px;filter:drop-shadow(0 0 30px rgba(60,140,255,.5))}
+#loader .bar{width:220px;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+#loader .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));transition:width .2s}
+
+/* AFTER FLIGHT */
+section.after{position:relative;padding:130px 0;background:var(--bg)}
+section.after.first{background:linear-gradient(180deg,rgba(2,4,10,0),var(--bg) 140px);margin-top:-140px;padding-top:200px}
+h2.big{font-family:var(--disp);font-weight:800;font-size:clamp(34px,4.6vw,64px);line-height:1;letter-spacing:-.025em;margin-top:16px;max-width:14ch}
+.about{display:grid;grid-template-columns:1fr 1.15fr;gap:60px;align-items:center}
+.portrait{aspect-ratio:4/5;border-radius:26px;position:relative;overflow:hidden;border:1px solid var(--line);background:radial-gradient(circle at 50% 30%,rgba(60,140,255,.35),transparent 60%),linear-gradient(180deg,#0a1a3a,#02050c)}
+.portrait img{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:60%;filter:drop-shadow(0 0 30px rgba(60,140,255,.6))}
+.portrait .tag{position:absolute;left:22px;bottom:22px;right:22px;padding:16px 18px;border-radius:16px;background:rgba(4,10,24,.7);border:1px solid var(--line)}
+.portrait .tag b{font-family:var(--disp);font-size:20px;display:block}
+.about p{color:var(--muted);margin-top:18px}
+blockquote{margin-top:28px;padding-left:20px;border-left:2px solid var(--blue);font-family:var(--disp);font-size:22px;line-height:1.3}
+.marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.track{display:flex;gap:18px;width:max-content;animation:slide 40s linear infinite}
+@keyframes slide{to{transform:translateX(-50%)}}
+.logo{width:180px;height:100px;border-radius:18px;display:grid;place-items:center;background:rgba(10,22,48,.6);border:1px solid var(--line);isolation:isolate}
+.logo img{max-width:120px;max-height:62px;object-fit:contain;filter:grayscale(1) invert(1) contrast(1.2);mix-blend-mode:screen;opacity:.8}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:48px;border-radius:28px;background:linear-gradient(160deg,rgba(20,50,120,.45),rgba(4,10,26,.75));border:1px solid rgba(120,180,255,.25);box-shadow:0 40px 120px -40px rgba(40,110,255,.45)}
+.contact .phone{display:inline-block;margin-top:28px;font-family:var(--disp);font-size:clamp(26px,3vw,38px);font-weight:700;border-bottom:1px solid var(--blue)}
+form{display:grid;gap:14px}
+label{font-size:12px;color:var(--muted);display:grid;gap:6px}
+input,select,textarea{width:100%;padding:14px 16px;border-radius:12px;background:rgba(2,6,16,.6);border:1px solid var(--line);color:var(--ink);font:inherit;font-size:15px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(47,123,255,.18)}
+textarea{min-height:110px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+footer{padding:40px 0 60px;color:var(--dim);font-size:13px;background:var(--bg)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:30px}
+@media (max-width:900px){
+  .links{display:none}
+  .about,.contact{grid-template-columns:1fr}.contact{padding:28px}
+  .left,.right{left:20px;right:20px;max-width:none;top:auto;bottom:12vh;margin-top:0}
+  .stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .progress{display:none}
+}
+@media (max-width:520px){.wrap{padding:0 16px}.row{grid-template-columns:1fr}.brand span{display:none}nav .wrap{padding:0 16px}}
+
+/* ===== blocky display type (matches the PIXEL PERFECT FLIGHT wordmark) ===== */
+.ch h2,h2.big,.card h3,.stat b,.contact .phone,.brand,blockquote,.svc h3,.press h3{font-family:var(--disp);font-weight:400;text-transform:uppercase;letter-spacing:.01em}
+.ch h2{font-size:clamp(46px,7vw,112px);line-height:.9}
+h2.big{font-size:clamp(46px,6.4vw,96px);line-height:.9;max-width:none}
+.card h3{font-size:30px;line-height:1}
+.stat b{font-size:clamp(30px,3.4vw,46px)}
+blockquote{font-size:26px;line-height:1.15}
+.grad{background:linear-gradient(100deg,#f3f6ff 0%,#9fd6ff 35%,#2f7bff 70%,#9fe6ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wordmark{font-family:var(--disp);text-transform:uppercase;font-size:22px;letter-spacing:.02em;background:linear-gradient(100deg,#3b8bff,#ff7a2f 45%,#3b8bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ===== end-of-flight logo over the ocean (pure code) ===== */
+#endlogo{position:absolute;left:50%;top:30%;width:min(46vw,620px);transform:translate(-50%,-50%);pointer-events:none;opacity:0}
+#endlogo .lg{position:relative;width:100%;aspect-ratio:486/190}
+#endlogo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#endlogo .main{filter:drop-shadow(0 0 18px rgba(80,160,255,.75)) drop-shadow(0 0 60px rgba(255,150,70,.35))}
+#endlogo .shine{position:absolute;inset:0;-webkit-mask:url(media/logo-alpha.png) center/contain no-repeat;mask:url(media/logo-alpha.png) center/contain no-repeat;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.95) 50%,transparent 60%) no-repeat;background-size:250% 100%;mix-blend-mode:screen}
+#endlogo .refl{position:absolute;left:0;right:0;top:100%;height:70%;overflow:hidden;transform:scaleY(-1);opacity:.22;filter:blur(3px);-webkit-mask-image:linear-gradient(to top,rgba(0,0,0,.9),transparent 70%);mask-image:linear-gradient(to top,rgba(0,0,0,.9),transparent 70%)}
+#endlogo .refl img{filter:sepia(.4) saturate(2) hue-rotate(-20deg)}
+#endlogo .tagline{margin-top:30%;text-align:center;font-family:"JetBrains Mono",monospace;letter-spacing:.5em;text-transform:uppercase;font-size:clamp(10px,1vw,13px);color:#fff;text-shadow:0 0 18px rgba(80,160,255,.9)}
+
+/* ===== sections from pixelperfectflight.com ===== */
+.mission{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center}
+.mission p{color:var(--muted);margin-top:18px;max-width:520px}
+.phone-frame{justify-self:center;width:min(320px,80vw);aspect-ratio:9/16;border-radius:34px;overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 120px -30px rgba(40,110,255,.55),0 0 0 8px rgba(10,20,44,.8);background:#000}
+.phone-frame video{width:100%;height:100%;object-fit:cover;display:block}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
+.svc{padding:30px;border-radius:22px;background:linear-gradient(170deg,rgba(18,40,90,.45),rgba(4,10,26,.7));border:1px solid var(--line);position:relative;overflow:hidden}
+.svc::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+.svc .num{font-family:var(--disp);font-size:64px;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(120,180,255,.5)}
+.svc h3{font-size:30px;line-height:1;margin:14px 0 14px}
+.svc p{color:var(--muted);font-size:15px}
+.underroof{margin-top:34px;color:var(--muted);text-align:center}
+.underroof b{color:var(--ink)}
+.press{display:grid;grid-template-columns:1fr 1.1fr;gap:0;border-radius:28px;overflow:hidden;border:1px solid var(--line);background:rgba(6,14,32,.7)}
+.press .ph{min-height:420px;background:url(media/press.webp) center 25%/cover}
+.press .tx{padding:44px}
+.press h3{font-size:clamp(34px,3.6vw,52px);line-height:.95;margin:14px 0 18px}
+.press p{color:var(--muted)}
+.about .portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;transform:none;left:0;top:0;filter:none}
+.logo{width:120px;height:120px;border-radius:50%;background:#fff;border:0;box-shadow:0 0 0 1px var(--line),0 10px 30px -10px rgba(40,110,255,.5)}
+.logo img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:cover;border-radius:50%;filter:none;mix-blend-mode:normal;opacity:1}
+@media (max-width:900px){.mission,.press{grid-template-columns:1fr}.svc-grid{grid-template-columns:1fr}.press .ph{min-height:300px}.press .tx{padding:28px}#endlogo{width:78vw;top:26%}}
+
+/* subtle scroll hint that sits just above the laptop */
+#lhint{position:absolute;left:0;top:0;pointer-events:none;opacity:0}
+#lhint .in{transform:translate(-50%,calc(-100% - 14px));display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.55)}
+#lhint span{font:500 11px/1 Inter,system-ui,sans-serif;letter-spacing:.42em;text-transform:uppercase;padding-left:.42em;opacity:.9}
+#lhint svg{width:16px;height:16px;opacity:.85;animation:nudge 1.8s cubic-bezier(.45,0,.25,1) infinite}
+@keyframes nudge{0%,100%{transform:translateY(-2px);opacity:.5}50%{transform:translateY(4px);opacity:.95}}
+/* promo video sound button */
+.phone-frame{position:relative}
+.sound{position:absolute;right:14px;bottom:14px;display:flex;align-items:center;gap:8px;padding:9px 14px 9px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(4,10,24,.55);color:#fff;font:600 12px Inter,system-ui,sans-serif;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:background .2s}
+.sound:hover{background:rgba(47,123,255,.6)}
+.sound svg{width:16px;height:16px}
+.form-note{font-size:13px;color:var(--muted);min-height:1.2em}
+</style>
+</head>
+<body>
+<div id="loader"><div class="box">
+  <img src="media/logo-src.png" alt="Pixel Perfect Flight">
+  <div class="bar"><i id="lbar"></i></div>
+  <div class="mono" id="ltxt">Preparing flight · 0%</div>
+</div></div>
+
+<nav id="nav"><div class="wrap">
+  <a href="#top" class="brand"><img src="media/nav-logo.png" alt="Pixel Perfect Flight logo"><span class="wordmark">PIXEL PERFECT FLIGHT</span></a>
+  <div class="links"><a href="#top">Home</a><a href="#services">Services</a><a href="#about">About</a><a href="#press">Press</a><a href="#contact">Contact</a></div>
+  <a href="#contact" class="btn btn-primary">Book a shoot</a>
+</div></nav>
+
+<main id="top">
+<section id="flight">
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div class="letter"></div>
+    <div class="grain"></div>
+    <div class="progress"><i id="prog"></i></div>
+
+    <div id="lhint" aria-hidden="true"><div class="in"><span>Scroll</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg></div></div>
+
+    <div class="ch left" data-in="108" data-out="196">
+      <div class="mono">Aerial · FAA Part 107 certified</div>
+      <h2>The shot from above <em>changes everything.</em></h2>
+      <p>Licensed drone cinematography for real estate, developments and brands, from rooftops to street level in one take.</p>
+    </div>
+
+    <div class="ch right" data-in="222" data-out="300"><div class="card">
+      <div class="mono">Module 01 · Identity</div>
+      <h3>Brand Identity &amp; Strategy</h3>
+      <p>Your brand is more than a logo. It's what people feel the moment they find you. We define your voice and build a visual identity that commands attention.</p>
+    </div></div>
+
+    <div class="ch left" data-in="306" data-out="362"><div class="card" style="max-width:440px">
+      <div class="mono">Module 02 · Broadcast</div>
+      <h3>Advertisements for Businesses</h3>
+      <p>Scroll-stopping social posts and ads built around your brand's voice. Viral content ideas, eye-catching visuals and storytelling that drive real engagement.</p>
+    </div></div>
+
+    <div class="ch right" data-in="366" data-out="424"><div class="card">
+      <div class="mono">Module 03 · Production</div>
+      <h3>A.I. Video, Editing &amp; Web Design</h3>
+      <p>Cinematic video, professional photography and cutting-edge web design, with generative AI video that pushes creative boundaries. If you can dream it, we can build it.</p>
+    </div></div>
+
+    <div class="ch bottom" data-in="432" data-out="505"><div class="stats card" style="padding:0">
+      <div class="stat"><b>300<i>+</i></b><small>Local businesses &amp; entrepreneurs helped</small></div>
+      <div class="stat"><b>500<i>K+</i></b><small>Units sold on launches we've worked on</small></div>
+      <div class="stat"><b>Part&nbsp;<i>107</i></b><small>FAA-certified drone pilot</small></div>
+      <div class="stat"><b>SW<i>FL</i></b><small>Native. Local market know-how</small></div>
+    </div></div>
+
+    <div id="endlogo"><div class="lg"><img class="main" src="media/logo-alpha.png" alt="Pixel Perfect Flight"><div class="shine" id="shine"></div><div class="refl"><img src="media/logo-alpha.png" alt=""></div></div><div class="tagline">Marketing. It's what we do.</div></div>
+
+    <div class="ch left" data-in="530" data-out="9999" style="top:auto;bottom:9vh;margin-top:0">
+      <div class="mono">Comms link · Open</div>
+      <h2>Ready to <em>launch?</em></h2>
+      <p>Let's build something that gets your brand seen.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
+        <a href="#contact" class="btn btn-primary">Start your project →</a>
+        <a href="tel:+12394147099" class="btn btn-ghost">239-414-7099</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="after first" id="mission">
+  <div class="wrap mission">
+    <div>
+      <div class="mono">System online · Fort Myers, FL</div>
+      <h2 class="big">Marketing. <span class="grad">It's what we do.</span></h2>
+      <div class="mono" style="margin-top:34px">Mission brief</div>
+      <h3 style="font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:clamp(28px,2.6vw,38px);line-height:1;margin-top:10px">Full-Service Brand Growth Studio</h3>
+      <p>We combine creative storytelling, aerial cinematography, and data-driven marketing strategy to help local businesses stand out, attract the right audience, and grow with intention.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px"><a href="#services" class="btn btn-primary">Explore services →</a><a href="#contact" class="btn btn-ghost">Contact us</a></div>
+    </div>
+    <div class="phone-frame"><video id="promo" src="media/promo-720.mp4" poster="media/promo-poster.jpg" muted loop playsinline preload="metadata"></video>
+      <button class="sound" id="sound" type="button" aria-label="Turn sound on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path id="snd-x" d="m22 9-6 6m0-6 6 6"/><path id="snd-w" d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" style="display:none"/></svg><span>Tap for sound</span></button></div>
+  </div>
+</section>
+
+<section class="after" id="services">
+  <div class="wrap">
+    <div class="mono">Services array · Active</div>
+    <h2 class="big">Grow your brand. <span class="grad">Own your market.</span></h2>
+    <p style="color:var(--muted);margin-top:18px;max-width:640px">We help Fort Myers businesses build powerful brand identities through strategic content, cinematic visuals, and marketing that actually converts. From concept to campaign, we make your brand impossible to ignore.</p>
+    <div class="svc-grid">
+      <div class="svc"><div class="num">01</div><div class="mono">Module 01 · Identity</div><h3>Brand Identity &amp; Strategy</h3><p>Your brand is more than a logo. It's what people feel the moment they find you. We help you own that moment. From defining your voice to building a visual identity that commands attention, we craft brands that attract the right customers and keep them coming back. Whether you're a real estate agent, restaurant owner, local business, or professional, we know what it takes to make you stand out in a crowded market.</p></div>
+      <div class="svc"><div class="num">02</div><div class="mono">Module 02 · Broadcast</div><h3>Advertisements for Businesses</h3><p>A comprehensive social media service designed to help businesses create captivating posts that resonate with their target audience. We specialize in crafting viral content ideas tailored to your brand's voice, ensuring maximum engagement and reach. From eye-catching visuals to compelling storytelling, we turn your ideas into shareable moments that connect with your audience.</p></div>
+      <div class="svc"><div class="num">03</div><div class="mono">Module 03 · Production</div><h3>A.I. Video, Editing &amp; Web Design</h3><p>We bring brands to life through cinematic video, professional photography, and cutting-edge web design, all tailored to your vision and built to make an impact. Every project is crafted with expert editing and stunning visuals. We also harness generative AI video to push creative boundaries and deliver content that truly sets you apart. If you can dream it, we can build it.</p></div>
+    </div>
+    <p class="underroof">Filming, editing, social media, ad campaigns, drone video, and website design. <b>All under one roof.</b></p>
+  </div>
+</section>
+
+<section class="after" id="about">
+  <div class="wrap about">
+    <div class="portrait"><img src="media/portrait.webp" alt="Trent Whitaker, Creator and Owner of Pixel Perfect Flight"><div class="tag"><b>Trent Whitaker</b><span class="mono" style="font-size:10px">Creator // Owner</span></div></div>
+    <div>
+      <div class="mono">About us</div>
+      <h2 class="big">Born in SWFL. <span class="grad">Built for local brands.</span></h2>
+      <p>Trent Whitaker is a Southwest Florida native and marketing professional who studied Marketing at Florida Atlantic University. He has quickly established himself in the content creation and digital marketing space, helping over 300 local businesses, real estate professionals, and entrepreneurs elevate their brands through high-impact visual media and strategic online presence.</p>
+      <p>Beyond local businesses, Trent has also managed social media accounts for publicly traded companies and contributed to major product launches that generated over 500,000 units sold, giving him experience operating at both local and national marketing levels.</p>
+      <p>As an FAA Part 107 Certified Drone Pilot, Trent is licensed to capture aerial imagery wherever projects require, from luxury real estate and commercial developments to large-scale marketing campaigns.</p>
+      <p>Through his company, Trent blends cinematic video production, strategic marketing insight, and modern social media execution to help clients stand out in crowded markets. Whether producing high-end real estate media or building full digital campaigns, he approaches every project with precision, creativity, and a focus on results.</p>
+      <blockquote>“I'm confident we'll accomplish your vision together.”</blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="after" id="press" style="padding-top:40px">
+  <div class="wrap">
+    <div class="mono">The full story</div>
+    <h2 class="big" style="margin-bottom:40px">Press</h2>
+    <div class="press">
+      <div class="ph" role="img" aria-label="Trent Whitaker holding a camera"></div>
+      <div class="tx">
+        <div class="mono">24Hip-Hop · Feature</div>
+        <h3>Meet Trent Whitaker: The Visionary Behind Pixel Perfect Flight</h3>
+        <p>At just 32 years old, Trent Whitaker has already made a significant mark on the creative landscape of Southwest Florida. Hailing from Fort Myers, Trent is the founder of Pixel Perfect Flight, a media company redefining how local brands show up.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px"><a class="btn btn-primary" href="https://24hip-hop.com/meet-trent-whitaker-the-visionary-behind-pixel-perfect-flight/" target="_blank" rel="noopener">Read the article →</a><a class="btn btn-ghost" href="https://www.instagram.com/pixelperfectflight" target="_blank" rel="noopener">@pixelperfectflight</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="after" style="padding-top:20px">
+  <div class="wrap"><h2 class="big" style="text-align:center;margin:0 auto 40px">Brands we've <span class="grad">partnered with</span></h2></div>
+  <div class="marquee"><div class="track" id="track"></div></div>
+</section>
+
+<section class="after" id="contact" style="padding-top:60px">
+  <div class="wrap"><div class="contact">
+    <div>
+      <div class="mono">Comms open · Fort Myers, FL</div>
+      <h2 class="big">Contact <span class="grad">us</span></h2>
+      <p style="color:var(--muted);margin-top:18px;max-width:380px">Send us a message and we'll get back to you shortly. Let's build something that gets your brand seen.</p>
+      <a class="phone" href="tel:+12394147099">239-414-7099</a><br>
+      <a href="mailto:pixelperfectflight@icloud.com" style="display:inline-block;margin-top:14px;color:var(--cyan)">pixelperfectflight@icloud.com</a>
+    </div>
+    <form id="cform" action="https://formsubmit.co/pixelperfectflight@icloud.com" method="POST">
+      <input type="hidden" name="_subject" value="New website enquiry · Pixel Perfect Flight">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="row"><label>First name<input name="name" autocomplete="given-name"></label><label>Email*<input name="email" type="email" required autocomplete="email"></label></div>
+      <label>Which service are you interested in?<select name="service"><option>Brand Identity &amp; Strategy</option><option>Advertisements for Businesses</option><option>A.I. Video</option><option>Video Editing</option><option>Web Design</option><option>Drone Aerials</option><option>Photography</option></select></label>
+      <label>Any additional info?<textarea name="message"></textarea></label>
+      <button class="btn btn-primary" style="justify-self:start">Send →</button>
+      <div class="form-note" id="fnote" role="status"></div>
+    </form>
+  </div></div>
+</section>
+</main>
+<footer><div class="wrap"><span>© 2026 Pixel Perfect Flight · Fort Myers &amp; Miami, Florida</span><span>Videography · Photography · Drone · Marketing · Web</span></div></footer>
+
+<script>
+(function(){
+const N=600;
+const small=Math.min(innerWidth,innerHeight*16/9)*Math.min(devicePixelRatio||1,2)<1100;
+const DIR='media/flight/'+(small?'960':'1920')+'/';
+const name=i=>DIR+'f'+String(i).padStart(4,'0')+'.webp';
+const imgs=new Array(N+1);let loaded=0;
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const flight=document.getElementById('flight'),prog=document.getElementById('prog');
+const chapters=[...document.querySelectorAll('.ch')].map(el=>({el,a:+el.dataset.in,b:+el.dataset.out}));
+const loader=document.getElementById('loader'),lbar=document.getElementById('lbar'),ltxt=document.getElementById('ltxt');
+let W=0,H=0,cur=1,target=1,drawn=-1;
+
+function resize(){const d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);drawn=-1}
+addEventListener('resize',resize);resize();
+
+function nearest(i){for(let k=0;k<N;k++){const a=imgs[i-k],b=imgs[i+k];if(a&&a.done)return a;if(b&&b.done)return b}return null}
+function draw(i){const im=nearest(i);if(!im)return;const iw=im.naturalWidth,ih=im.naturalHeight,s=Math.max(W/iw,H/ih);const dw=iw*s,dh=ih*s;ctx.drawImage(im,(W-dw)/2,(H-dh)/2,dw,dh)}
+
+// progressive load: every 8th frame first, then every 4th, 2nd, then the rest
+const order=[];const seen=new Set();[8,4,2,1].forEach(st=>{for(let i=1;i<=N;i+=st){if(!seen.has(i)){seen.add(i);order.push(i)}}});
+const FIRST=Math.ceil(N/8);
+let q=0,active=0;const MAX=6;
+function pump(){while(active<MAX&&q<order.length){const i=order[q++];active++;const im=new Image();im.decoding='async';
+  im.onload=()=>{im.done=true;active--;loaded++;progress();drawn=-1;pump()};im.onerror=()=>{active--;loaded++;progress();pump()};im.src=name(i);imgs[i]=im}}
+function progress(){const p=Math.min(loaded/FIRST,1);lbar.style.width=(p*100)+'%';ltxt.textContent='Preparing flight · '+Math.round(p*100)+'%';if(p>=1)loader.classList.add('done')}
+pump();setTimeout(()=>loader.classList.add('done'),12000);
+
+function scrollFrame(){const r=flight.getBoundingClientRect();const total=flight.offsetHeight-innerHeight;const p=Math.min(Math.max(-r.top/total,0),1);return {p,f:1+p*(N-1)}}
+
+// laptop scroll hint: follows the tracked laptop screen, gone by frame ~30
+const HP=[[0.5064, 0.4194], [0.5064, 0.4193], [0.5064, 0.4189], [0.5064, 0.4187], [0.5065, 0.4185], [0.5064, 0.4185], [0.5064, 0.4183], [0.5065, 0.418], [0.5066, 0.4176], [0.5066, 0.417], [0.5066, 0.4163], [0.5067, 0.4157], [0.5067, 0.4152], [0.5067, 0.415], [0.5068, 0.4146], [0.5068, 0.4139], [0.5069, 0.4131], [0.507, 0.4124], [0.507, 0.412], [0.507, 0.4111], [0.5071, 0.4102], [0.5071, 0.4094], [0.5071, 0.4089], [0.5071, 0.4081], [0.5071, 0.4072], [0.5073, 0.4065], [0.5072, 0.4054], [0.5072, 0.4048], [0.5072, 0.4039], [0.5073, 0.4028], [0.5074, 0.4019], [0.5074, 0.4009], [0.5074, 0.4004], [0.5074, 0.3991], [0.5075, 0.398], [0.5076, 0.397], [0.5077, 0.3956], [0.5077, 0.3948], [0.5078, 0.3931], [0.5079, 0.3913]],lhint=document.getElementById('lhint');
+function placeHint(){const k=Math.max(0,Math.min(HP.length-1,cur-1)),i=Math.floor(k),t=k-i,a=HP[i],b=HP[Math.min(i+1,HP.length-1)];
+  const x=a[0]+(b[0]-a[0])*t,y=a[1]+(b[1]-a[1])*t,s=Math.max(W/1920,H/1080);
+  lhint.style.transform=`translate(${(W-1920*s)/2+x*1920*s}px,${(H-1080*s)/2+y*1080*s}px)`;
+  lhint.style.opacity=Math.max(0,Math.min(1,(30-cur)/18)).toFixed(3)}
+const nav=document.getElementById('nav'),endlogo=document.getElementById('endlogo'),shine=document.getElementById('shine');
+function tick(){
+  const {p,f}=scrollFrame();target=f;cur+=(target-cur)*.14;if(Math.abs(target-cur)<.01)cur=target;
+  const fi=Math.round(cur);if(fi!==drawn){draw(fi);drawn=fi}
+  prog.style.height=(p*100)+'%';
+  for(const c of chapters){const fade=14;let o=0;if(cur>=c.a-fade&&cur<=c.b+fade){o=Math.min(1,(cur-(c.a-fade))/fade,(c.b+fade-cur)/fade)}
+    o=Math.max(0,Math.min(1,o));c.el.style.opacity=o.toFixed(3);const y=(1-o)*30;
+    c.el.style.transform=c.el.classList.contains('bottom')?`translate(-50%,${y}px)`:`translateY(${y}px)`;c.el.classList.toggle('on',o>.5)}
+  {const t=Math.max(0,Math.min(1,(cur-548)/40)),e=t*t*(3-2*t);endlogo.style.opacity=e.toFixed(3);
+   endlogo.style.transform=`translate(-50%,-50%) scale(${(.86+.14*e).toFixed(4)})`;endlogo.style.filter=`blur(${((1-e)*14).toFixed(2)}px)`;
+   shine.style.backgroundPosition=`${(140-Math.max(0,Math.min(1,(cur-570)/30))*180).toFixed(1)}% 0`}
+  placeHint();
+  nav.classList.toggle('solid',scrollY>flight.offsetHeight-innerHeight-40);
+  requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+
+document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const fr=+a.dataset.go;const total=flight.offsetHeight-innerHeight;scrollTo({top:flight.offsetTop+(fr-1)/(N-1)*total,behavior:'smooth'})}));
+
+const logos=["af9202a447f24da7bd94ec219c9fa14d","0315ad49c95f4238ae643863b5113999","2d3d75e124c14debb7f7abe6bc19e4cc","35593f52913541d291ed7ab1a2e78914","8455fdea3c1646eca25b1f7dcd66ce96","34ba0183681347e9b93c14e0a24b3278","d9f83f80266a401d841283d0d9ab2594","a77c4e1be66f4cbc8f8b5181a17db261","54c971eab81e40c1beb6b253fecd0066","1b5a78e539944b75b79f008fa6187ad6","b38b2362739342b5bac72af5db01b5da","a4c299d75460462c844cfc9b8e79d853"];
+const track=document.getElementById('track');[...logos,...logos].forEach((id,i)=>{const d=document.createElement('div');d.className='logo';d.innerHTML=`<img loading="lazy" alt="Partner ${i%12+1}" src="media/partners/${id}.png">`;track.appendChild(d)});
+
+// promo video: plays (muted) when scrolled into view, pauses when out; sound button unmutes
+const promo=document.getElementById('promo'),snd=document.getElementById('sound');
+new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)promo.play().catch(()=>{});else promo.pause()}),{threshold:.4}).observe(promo);
+snd.addEventListener('click',()=>{promo.muted=!promo.muted;if(!promo.muted){promo.play().catch(()=>{})}
+  snd.querySelector('span').textContent=promo.muted?'Tap for sound':'Sound on';snd.setAttribute('aria-label',promo.muted?'Turn sound on':'Mute');
+  document.getElementById('snd-x').style.display=promo.muted?'':'none';document.getElementById('snd-w').style.display=promo.muted?'none':''});
+
+// contact form -> emailed to pixelperfectflight@icloud.com via FormSubmit
+const cform=document.getElementById('cform'),fnote=document.getElementById('fnote');
+cform.addEventListener('submit',async e=>{e.preventDefault();const btn=cform.querySelector('button');btn.disabled=true;btn.textContent='Sending…';fnote.textContent='';
+  try{const r=await fetch('https://formsubmit.co/ajax/pixelperfectflight@icloud.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(cform)});
+    const j=await r.json().catch(()=>({}));if(!r.ok||j.success==='false'||j.success===false)throw new Error(j.message||'failed');
+    cform.reset();btn.textContent='Message sent ✓';fnote.textContent="Thanks! We'll get back to you shortly."}
+  catch(err){btn.disabled=false;btn.textContent='Send →';fnote.innerHTML='Something went wrong. Call <a href="tel:+12394147099" style="color:var(--cyan)">239-414-7099</a> or email <a href="mailto:pixelperfectflight@icloud.com" style="color:var(--cyan)">pixelperfectflight@icloud.com</a>.'}});
+})();
+</script>
+</body>
+</html>
