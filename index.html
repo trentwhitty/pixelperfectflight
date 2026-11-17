@@ -324,17 +324,21 @@ blockquote{font-size:26px;line-height:1.15}
 <script>
 (function(){
 const N=600;
-const small=Math.min(innerWidth,innerHeight*16/9)*Math.min(devicePixelRatio||1,2)<1100;
-const DIR='media/flight/'+(small?'960':'1920')+'/';
-const name=i=>DIR+'f'+String(i).padStart(4,'0')+'.webp';
-const imgs=new Array(N+1);let loaded=0;
+// frame sets: 'm' = tall centre crop of the 4K frames for portrait phones (full detail where a phone looks),
+// '1920' for desktops, '960' for small landscape screens. Switches if the device is rotated.
+const CW_M=(2160*9/16)/3840;            // width of the phone crop as a fraction of the full frame
+function pickSet(){if(innerHeight>innerWidth*1.05)return 'm';return Math.min(innerWidth,innerHeight*16/9)*Math.min(devicePixelRatio||1,2)<1100?'960':'1920'}
+let SET=pickSet();
+const name=i=>'media/flight/'+SET+'/f'+String(i).padStart(4,'0')+'.webp';
+let imgs=new Array(N+1);let loaded=0,gen=0;
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d');
 const flight=document.getElementById('flight'),prog=document.getElementById('prog');
 const chapters=[...document.querySelectorAll('.ch')].map(el=>({el,a:+el.dataset.in,b:+el.dataset.out}));
 const loader=document.getElementById('loader'),lbar=document.getElementById('lbar'),ltxt=document.getElementById('ltxt');
 let W=0,H=0,cur=1,target=1,drawn=-1;
 
-function resize(){const d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);drawn=-1}
+function resize(){const d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);drawn=-1;
+  const ns=pickSet();if(typeof pump==='function'&&ns!==SET){SET=ns;gen++;imgs=new Array(N+1);q=0;active=0;pump()}}
 addEventListener('resize',resize);resize();
 
 function nearest(i){for(let k=0;k<N;k++){const a=imgs[i-k],b=imgs[i+k];if(a&&a.done)return a;if(b&&b.done)return b}return null}
@@ -344,8 +348,8 @@ function draw(i){const im=nearest(i);if(!im)return;const iw=im.naturalWidth,ih=i
 const order=[];const seen=new Set();[8,4,2,1].forEach(st=>{for(let i=1;i<=N;i+=st){if(!seen.has(i)){seen.add(i);order.push(i)}}});
 const FIRST=Math.ceil(N/8);
 let q=0,active=0;const MAX=6;
-function pump(){while(active<MAX&&q<order.length){const i=order[q++];active++;const im=new Image();im.decoding='async';
-  im.onload=()=>{im.done=true;active--;loaded++;progress();drawn=-1;pump()};im.onerror=()=>{active--;loaded++;progress();pump()};im.src=name(i);imgs[i]=im}}
+function pump(){while(active<MAX&&q<order.length){const i=order[q++];active++;const im=new Image(),g=gen;im.decoding='async';
+  im.onload=()=>{if(g!==gen)return;im.done=true;active--;loaded++;progress();drawn=-1;pump()};im.onerror=()=>{if(g!==gen)return;active--;loaded++;progress();pump()};im.src=name(i);imgs[i]=im}}
 function progress(){const p=Math.min(loaded/FIRST,1);lbar.style.width=(p*100)+'%';ltxt.textContent='Preparing flight · '+Math.round(p*100)+'%';if(p>=1)loader.classList.add('done')}
 pump();setTimeout(()=>loader.classList.add('done'),12000);
 
@@ -354,8 +358,10 @@ function scrollFrame(){const r=flight.getBoundingClientRect();const total=flight
 // laptop scroll hint: follows the tracked laptop screen, gone by frame ~30
 const HP=[[0.5064, 0.4194], [0.5064, 0.4193], [0.5064, 0.4189], [0.5064, 0.4187], [0.5065, 0.4185], [0.5064, 0.4185], [0.5064, 0.4183], [0.5065, 0.418], [0.5066, 0.4176], [0.5066, 0.417], [0.5066, 0.4163], [0.5067, 0.4157], [0.5067, 0.4152], [0.5067, 0.415], [0.5068, 0.4146], [0.5068, 0.4139], [0.5069, 0.4131], [0.507, 0.4124], [0.507, 0.412], [0.507, 0.4111], [0.5071, 0.4102], [0.5071, 0.4094], [0.5071, 0.4089], [0.5071, 0.4081], [0.5071, 0.4072], [0.5073, 0.4065], [0.5072, 0.4054], [0.5072, 0.4048], [0.5072, 0.4039], [0.5073, 0.4028], [0.5074, 0.4019], [0.5074, 0.4009], [0.5074, 0.4004], [0.5074, 0.3991], [0.5075, 0.398], [0.5076, 0.397], [0.5077, 0.3956], [0.5077, 0.3948], [0.5078, 0.3931], [0.5079, 0.3913]],lhint=document.getElementById('lhint');
 function placeHint(){const k=Math.max(0,Math.min(HP.length-1,cur-1)),i=Math.floor(k),t=k-i,a=HP[i],b=HP[Math.min(i+1,HP.length-1)];
-  const x=a[0]+(b[0]-a[0])*t,y=a[1]+(b[1]-a[1])*t,s=Math.max(W/1920,H/1080);
-  lhint.style.transform=`translate(${(W-1920*s)/2+x*1920*s}px,${(H-1080*s)/2+y*1080*s}px)`;
+  let x=a[0]+(b[0]-a[0])*t;const y=a[1]+(b[1]-a[1])*t;let FW=1920,FH=1080;
+  if(SET==='m'){x=(x-(1-CW_M)/2)/CW_M;FW=900;FH=1600}                  // position inside the phone crop
+  const s=Math.max(W/FW,H/FH);
+  lhint.style.transform=`translate(${(W-FW*s)/2+x*FW*s}px,${(H-FH*s)/2+y*FH*s}px)`;
   lhint.style.opacity=Math.max(0,Math.min(1,(30-cur)/18)).toFixed(3)}
 const nav=document.getElementById('nav'),endlogo=document.getElementById('endlogo'),shine=document.getElementById('shine');
 function tick(){
