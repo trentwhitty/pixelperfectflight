@@ -162,6 +162,14 @@ blockquote{font-size:26px;line-height:1.15}
 .form-note{font-size:13px;color:var(--muted);min-height:1.2em}
 
 #contact{scroll-margin-top:80px}
+
+/* keep-scrolling hint during the dive (bottom centre, phone + desktop) */
+#dhint{position:absolute;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);pointer-events:none;opacity:0;
+  display:flex;flex-direction:column;align-items:center;gap:6px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+#dhint span{font:500 11px/1 Inter,system-ui,sans-serif;letter-spacing:.42em;text-transform:uppercase;padding-left:.42em;opacity:.9}
+#dhint .pill{width:22px;height:34px;border-radius:12px;border:1.5px solid rgba(255,255,255,.75);display:grid;place-items:start center;padding-top:6px;background:rgba(2,6,16,.18);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+#dhint .pill svg{width:12px;height:12px;animation:nudge 1.8s cubic-bezier(.45,0,.25,1) infinite}
+@media (max-width:900px){#dhint{bottom:calc(14px + env(safe-area-inset-bottom))}#dhint span{font-size:10px}}
 </style>
 </head>
 <body>
@@ -185,12 +193,13 @@ blockquote{font-size:26px;line-height:1.15}
     <div class="grain"></div>
     <div class="progress"><i id="prog"></i></div>
 
+    <div id="dhint" aria-hidden="true"><div class="pill"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg></div><span>Scroll</span></div>
     <div id="lhint" aria-hidden="true"><div class="in"><span>Scroll</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg></div></div>
 
     <div class="ch left" data-in="108" data-out="196">
-      <div class="mono">Aerial · FAA Part 107 certified</div>
-      <h2>The shot from above <em>changes everything.</em></h2>
-      <p>Licensed drone cinematography for real estate, developments and brands, from rooftops to street level in one take.</p>
+      <div class="mono">Content · Websites · Impact</div>
+      <h2>Content that <em>moves people.</em></h2>
+      <p>We create content and websites for businesses that people actually feel. Work that stops the scroll, tells your story and turns attention into customers.</p>
     </div>
 
     <div class="ch right" data-in="222" data-out="300"><div class="card">
@@ -363,6 +372,7 @@ function placeHint(){const k=Math.max(0,Math.min(HP.length-1,cur-1)),i=Math.floo
   const s=Math.max(W/FW,H/FH);
   lhint.style.transform=`translate(${(W-FW*s)/2+x*FW*s}px,${(H-FH*s)/2+y*FH*s}px)`;
   lhint.style.opacity=Math.max(0,Math.min(1,(30-cur)/18)).toFixed(3)}
+const dhint=document.getElementById('dhint');
 const nav=document.getElementById('nav'),endlogo=document.getElementById('endlogo'),shine=document.getElementById('shine');
 function tick(){
   const {p,f}=scrollFrame();target=f;cur+=(target-cur)*.14;if(Math.abs(target-cur)<.01)cur=target;
@@ -375,6 +385,7 @@ function tick(){
    endlogo.style.transform=`translate(-50%,-50%) scale(${(.86+.14*e).toFixed(4)})`;endlogo.style.filter=`blur(${((1-e)*14).toFixed(2)}px)`;
    shine.style.backgroundPosition=`${(140-Math.max(0,Math.min(1,(cur-570)/30))*180).toFixed(1)}% 0`}
   placeHint();
+  {const a=Math.min(1,(cur-100)/12,(292-cur)/14);dhint.style.opacity=Math.max(0,a).toFixed(3)}   // visible through the dive
   nav.classList.toggle('solid',scrollY>flight.offsetHeight-innerHeight-40);
   requestAnimationFrame(tick)}
 requestAnimationFrame(tick);
