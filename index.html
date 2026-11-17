@@ -385,13 +385,25 @@ snd.addEventListener('click',()=>{promo.muted=!promo.muted;if(!promo.muted){prom
   snd.querySelector('span').textContent=promo.muted?'Tap for sound':'Sound on';snd.setAttribute('aria-label',promo.muted?'Turn sound on':'Mute');
   document.getElementById('snd-x').style.display=promo.muted?'':'none';document.getElementById('snd-w').style.display=promo.muted?'none':''});
 
-// contact form -> emailed to pixelperfectflight@icloud.com via FormSubmit
+// contact form -> emailed to the inbox in the page's mailto link.
+// Uses Web3Forms when an access key is set (reliable), otherwise FormSubmit.
+// Never hangs: gives up after 12 s and offers the same message as a ready-to-send email.
+const W3F_KEY='';                                   // paste the Web3Forms access key here
 const cform=document.getElementById('cform'),fnote=document.getElementById('fnote');
+const TO=(document.querySelector('a[href^="mailto:"]')||{}).href?.replace('mailto:','')||'';
 cform.addEventListener('submit',async e=>{e.preventDefault();const btn=cform.querySelector('button');btn.disabled=true;btn.textContent='Sending…';fnote.textContent='';
-  try{const r=await fetch('https://formsubmit.co/ajax/pixelperfectflight@icloud.com',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(cform)});
+  const fd=new FormData(cform);const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),12000);
+  try{let r;
+    if(W3F_KEY){fd.append('access_key',W3F_KEY);fd.append('subject',fd.get('_subject')||'New website enquiry');fd.append('from_name','pixelperfectflight.com');fd.append('botcheck',fd.get('_honey')||'');
+      r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Accept':'application/json'},body:fd,signal:ctl.signal})}
+    else r=await fetch('https://formsubmit.co/ajax/'+TO,{method:'POST',headers:{'Accept':'application/json'},body:fd,signal:ctl.signal});
     const j=await r.json().catch(()=>({}));if(!r.ok||j.success==='false'||j.success===false)throw new Error(j.message||'failed');
     cform.reset();btn.textContent='Message sent ✓';fnote.textContent="Thanks! We'll get back to you shortly."}
-  catch(err){btn.disabled=false;btn.textContent='Send →';fnote.innerHTML='Something went wrong. Call <a href="tel:+12394147099" style="color:var(--cyan)">239-414-7099</a> or email <a href="mailto:pixelperfectflight@icloud.com" style="color:var(--cyan)">pixelperfectflight@icloud.com</a>.'}});
+  catch(err){btn.disabled=false;btn.textContent='Send →';
+    const body=`Name: ${fd.get('name')||''}\nEmail: ${fd.get('email')||''}\nService: ${fd.get('service')||''}\n\n${fd.get('message')||''}`;
+    const mail=`mailto:${TO}?subject=${encodeURIComponent('Website enquiry')}&body=${encodeURIComponent(body)}`;
+    fnote.innerHTML=`Our form is having trouble right now. <a href="${mail}" style="color:var(--cyan);font-weight:600">Send it by email instead →</a> or call <a href="tel:+12394147099" style="color:var(--cyan)">239-414-7099</a>.`}
+  finally{clearTimeout(timer)}});
 
 // every "contact" button glides to the form and puts the cursor in the first field
 document.querySelectorAll('a[href="#contact"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();
