@@ -405,8 +405,8 @@ requestAnimationFrame(tick);
 
 document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const fr=+a.dataset.go;const total=flight.offsetHeight-innerHeight;scrollTo({top:flight.offsetTop+(fr-1)/(N-1)*total,behavior:'smooth'})}));
 
-const logos=["af9202a447f24da7bd94ec219c9fa14d","0315ad49c95f4238ae643863b5113999","2d3d75e124c14debb7f7abe6bc19e4cc","35593f52913541d291ed7ab1a2e78914","8455fdea3c1646eca25b1f7dcd66ce96","34ba0183681347e9b93c14e0a24b3278","d9f83f80266a401d841283d0d9ab2594","a77c4e1be66f4cbc8f8b5181a17db261","54c971eab81e40c1beb6b253fecd0066","1b5a78e539944b75b79f008fa6187ad6","b38b2362739342b5bac72af5db01b5da","a4c299d75460462c844cfc9b8e79d853"];
-const track=document.getElementById('track');[...logos,...logos].forEach((id,i)=>{const d=document.createElement('div');d.className='logo';d.innerHTML=`<img loading="lazy" alt="Partner ${i%12+1}" src="media/partners/${id}.png">`;track.appendChild(d)});
+const logos=["zacks-snacks","af9202a447f24da7bd94ec219c9fa14d","0315ad49c95f4238ae643863b5113999","2d3d75e124c14debb7f7abe6bc19e4cc","35593f52913541d291ed7ab1a2e78914","8455fdea3c1646eca25b1f7dcd66ce96","34ba0183681347e9b93c14e0a24b3278","d9f83f80266a401d841283d0d9ab2594","a77c4e1be66f4cbc8f8b5181a17db261","54c971eab81e40c1beb6b253fecd0066","1b5a78e539944b75b79f008fa6187ad6","b38b2362739342b5bac72af5db01b5da","a4c299d75460462c844cfc9b8e79d853"];
+const track=document.getElementById('track');[...logos,...logos].forEach((id,i)=>{const d=document.createElement('div');d.className='logo';d.innerHTML=`<img loading="lazy" alt="${id==='zacks-snacks'?'Zacks Snacks':'Partner '+(i%logos.length+1)}" src="media/partners/${id}.png">`;track.appendChild(d)});
 
 // promo video: plays (muted) when scrolled into view, pauses when out; sound button unmutes
 const promo=document.getElementById('promo'),snd=document.getElementById('sound');
