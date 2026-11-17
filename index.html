@@ -394,7 +394,7 @@ snd.addEventListener('click',()=>{promo.muted=!promo.muted;if(!promo.muted){prom
 // contact form -> emailed to the inbox in the page's mailto link.
 // Uses Web3Forms when an access key is set (reliable), otherwise FormSubmit.
 // Never hangs: gives up after 12 s and offers the same message as a ready-to-send email.
-const W3F_KEY='';                                   // paste the Web3Forms access key here
+const W3F_KEY='66151676-b1d7-43db-ac8f-1e14c4fb8023'; // Web3Forms public access key ("Pixel Perfect Flight Contact")
 const cform=document.getElementById('cform'),fnote=document.getElementById('fnote');
 const TO=(document.querySelector('a[href^="mailto:"]')||{}).href?.replace('mailto:','')||'';
 cform.addEventListener('submit',async e=>{e.preventDefault();const btn=cform.querySelector('button');btn.disabled=true;btn.textContent='Sending…';fnote.textContent='';
